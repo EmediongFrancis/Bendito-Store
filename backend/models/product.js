@@ -1,5 +1,7 @@
+// Import mongoose (for DB schema).
 const mongoose = require('mongoose');
 
+// Write product schema using Schema object.
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
