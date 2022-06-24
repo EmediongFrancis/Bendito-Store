@@ -10,7 +10,7 @@ exports.newProduct = async (req, res, next) => {
 }
 
 // Get all products.
-exports.getProducts = (req, res, next) => {
+exports.getProducts = async (req, res, next) => {
 
     const products = await Product.find();
     
