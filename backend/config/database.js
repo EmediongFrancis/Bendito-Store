@@ -1,6 +1,7 @@
+// Import mongoose for MongoDB.
 const mongoose = require('mongoose');
 
-
+// Write DB connection logic.
 const connectDB = () => {
     mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
@@ -10,5 +11,5 @@ const connectDB = () => {
     })
 }
 
-
+// Export connection logic to be used externally.
 module.exports = connectDB;
