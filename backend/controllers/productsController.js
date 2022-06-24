@@ -9,9 +9,14 @@ exports.newProduct = async (req, res, next) => {
     });
 }
 
+// Get all products.
 exports.getProducts = (req, res, next) => {
+
+    const products = await Product.find();
+    
     res.status(200).json({
         success: true,
-        message: 'Products fetched successfully.'
+        count: products.length,
+        products
     });
 }
