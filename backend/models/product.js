@@ -92,4 +92,5 @@ const productSchema = new mongoose.Schema({
     }
 })
 
+// Export product schema to be used externaly.
 module.exports = mongoose.model('Product', productSchema);
