@@ -1,5 +1,23 @@
 [
     {
-        
+        "name": "SanDisk Ultra 128GB Memory card",
+        "price": "49.99",
+        "description": "SanDisk Ultra 128GB Memory card",
+        "ratings": "4.5",
+        "images": [{
+            "public_id": "san-disk-ultra-128gb-memory-card-1",
+            "url": "https://res.cloudinary.com/dzqb3gjvt/image/upload/v1598410001/san-disk-ultra-128gb-memory-card-1.jpg"
+        }],
+        "category": "Electronic gadgets",
+        "vendor": "Ebay",
+        "stock": "10",
+        "totalReviews": "10",
+        "reviews": [{
+            "name": "John",
+            "rating": "5",
+            "comment": "This is a good product"
+        }]
+
+
     }
 ]
