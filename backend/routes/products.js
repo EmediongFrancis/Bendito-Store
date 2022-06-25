@@ -2,8 +2,13 @@
 const express = require('express');
 const router = express.Router();
 
-// Import `getProducts` and `newProduct` function from `productsController.js`.
-const { getProducts, addProduct, getProduct, updateProduct, deleteProduct } = require('../controllers/productsController');
+// Import controller functions.
+const { getProducts,
+        addProduct,
+        getProduct,
+        updateProduct,
+        deleteProduct 
+    } = require('../controllers/productsController');
 
 // Create route for `/products` endpoint.
 router.route('/products').get(getProducts);
