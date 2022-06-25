@@ -1,18 +1,19 @@
 const Product = require('../models/product');
 const ObjectId = require('mongodb').ObjectId;
 const ErrorHandler = require('../utils/errorHandler');
+const asyncErrors = require('../middlewares/asyncErrors');
 
 // Create new product using product model.
-exports.addProduct = async (req, res, next) => {
+exports.addProduct = asyncErrors (async (req, res, next) => {
     const product = await Product.create(req.body);
     res.status(201).json({
         success: true,
         product
     });
-}
+})
 
 // Get all products.
-exports.getProducts = async (req, res, next) => {
+exports.getProducts = asyncErrors (async (req, res, next) => {
 
     const products = await Product.find();
     
@@ -21,10 +22,10 @@ exports.getProducts = async (req, res, next) => {
         count: products.length,
         products
     });
-}
+})
 
 // Get single product by ID.
-exports.getProduct = async (req, res, next) => {
+exports.getProduct = asyncErrors (async (req, res, next) => {
     const product = await Product.findById(ObjectId(req.params.id));
 
     if (!product) {
@@ -35,10 +36,10 @@ exports.getProduct = async (req, res, next) => {
         success: true,
         product
     })
-}
+})
 
 // Update product by ID.
-exports.updateProduct = async (req, res, next) => {
+exports.updateProduct = asyncErrors (async (req, res, next) => {
 
     let product = await Product.findByIdAndUpdate(ObjectId(req.params.id));
 
@@ -59,10 +60,10 @@ exports.updateProduct = async (req, res, next) => {
         success: true,
         product
     })
-}
+})
 
 // Delete product by ID.
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteProduct = asyncErrors (async (req, res, next) => {
     let product = await Product.findByIdAndDelete(ObjectId(req.params.id));
 
     if (!product) {
@@ -78,4 +79,4 @@ exports.deleteProduct = async (req, res, next) => {
         success: true,
         message: 'Product deleted.'
     })
-}
+})
