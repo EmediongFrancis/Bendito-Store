@@ -1,8 +1,10 @@
 const ErrorHandler = require('../utils/errorHandler');
 
+// Error handler middleware.
 module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
-
+    
+    // Handle development errors.
     if (process.env.NODE_ENV === 'development') {
         res.status(err.statusCode).json({
             success: false,
@@ -12,6 +14,7 @@ module.exports = (err, req, res, next) => {
         })
     }
 
+    // Handle production errors.
     if (process.env.NODE_ENV === 'production') {
         let error = {...err};
 
