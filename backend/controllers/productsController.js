@@ -16,8 +16,10 @@ exports.addProduct = asyncErrors (async (req, res, next) => {
 // Get all products.
 exports.getProducts = asyncErrors (async (req, res, next) => {
 
+    // Implement API features; search, pagination, and filtering.
     const apiFeatures = new APIFeatures(Product.find(), req.query)
                                         .search()
+                                        .filter();
     const products = await apiFeatures.query;
     
     res.status(200).json({
