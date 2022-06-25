@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const ObjectId = require('mongodb').ObjectId;
+const ErrorHandler = require('../utils/errorHandler');
 
 // Create new product using product model.
 exports.addProduct = async (req, res, next) => {
@@ -27,10 +28,7 @@ exports.getProduct = async (req, res, next) => {
     const product = await Product.findById(ObjectId(req.params.id));
 
     if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found.'
-        });
+        return next(new ErrorHandler('Product not found.', 404));
     }
 
     res.status(200).json({
