@@ -20,9 +20,21 @@ module.exports = (err, req, res, next) => {
 
         error.message = err.message
 
+        // Handle Mongoose ObjectId errors.
+        if (err.name === 'CastError') {
+            const message = `Resource not found. Invalid: ${err.path}`;
+            error = new ErrorHandler(message, 400);
+        }
+
+        // Handle Mongoose Validation errors.
+        if (err.name === 'ValidationError') {
+            const message = Object.values(err.errors).map(val => val.message);
+            error = new ErrorHandler(message, 400);
+        }
+
         res.status(error.statusCode).json({
             success: false,
-            errorMessage: error.message || 'Something went wrong with the server.'
+            message: error.message || 'Something went wrong with the server.'
         })
     }
 }

@@ -1,5 +1,4 @@
 const Product = require('../models/product');
-const ObjectId = require('mongodb').ObjectId;
 const ErrorHandler = require('../utils/errorHandler');
 const asyncErrors = require('../middlewares/asyncErrors');
 
@@ -26,7 +25,7 @@ exports.getProducts = asyncErrors (async (req, res, next) => {
 
 // Get single product by ID.
 exports.getProduct = asyncErrors (async (req, res, next) => {
-    const product = await Product.findById(ObjectId(req.params.id));
+    const product = await Product.findById(req.params.id);
 
     if (!product) {
         return next(new ErrorHandler('Product not found.', 404));
@@ -41,13 +40,13 @@ exports.getProduct = asyncErrors (async (req, res, next) => {
 // Update product by ID.
 exports.updateProduct = asyncErrors (async (req, res, next) => {
 
-    let product = await Product.findByIdAndUpdate(ObjectId(req.params.id));
+    let product = await Product.findByIdAndUpdate(req.params.id);
 
     if (!product) {
         return next(new ErrorHandler('Product not found.', 404));
     }
 
-    product = await Product.findByIdAndUpdate(ObjectId(req.params.id), req.body, {
+    product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
         useFindAndModify: false
@@ -61,13 +60,13 @@ exports.updateProduct = asyncErrors (async (req, res, next) => {
 
 // Delete product by ID.
 exports.deleteProduct = asyncErrors (async (req, res, next) => {
-    let product = await Product.findByIdAndDelete(ObjectId(req.params.id));
+    let product = await Product.findByIdAndDelete(req.params.id);
 
     if (!product) {
         return next(new ErrorHandler('Product not found.', 404));
     }
 
-    product = await Product.findByIdAndDelete(ObjectId(req.params.id));
+    product = await Product.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
         success: true,
