@@ -19,11 +19,9 @@ router.route('/admin/products/new').post(addProduct);
 // Create route to get single product by ID.
 router.route('/products/:id').get(getProduct);
 
-// Update product by ID.
-router.route('/admin/products/:id').put(updateProduct);
-
-// Delete product by ID.
-router.route('/admin/products/:id').delete(deleteProduct);
+// Update & delete product by ID.
+router.route('/admin/products/:id').put(updateProduct)
+                                   .delete(deleteProduct);
 
 // Export router object of express.
 module.exports = router;
