@@ -44,10 +44,7 @@ exports.updateProduct = asyncErrors (async (req, res, next) => {
     let product = await Product.findByIdAndUpdate(ObjectId(req.params.id));
 
     if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found.'
-        });
+        return next(new ErrorHandler('Product not found.', 404));
     }
 
     product = await Product.findByIdAndUpdate(ObjectId(req.params.id), req.body, {
@@ -67,10 +64,7 @@ exports.deleteProduct = asyncErrors (async (req, res, next) => {
     let product = await Product.findByIdAndDelete(ObjectId(req.params.id));
 
     if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found.'
-        });
+        return next(new ErrorHandler('Product not found.', 404));
     }
 
     product = await Product.findByIdAndDelete(ObjectId(req.params.id));
