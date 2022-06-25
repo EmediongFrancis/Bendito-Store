@@ -5,6 +5,13 @@ const connectDB = require('./config/database');
 // Import env-var module and specify path to vars.
 const dotenv = require('dotenv');
 
+// Handle uncaught exceptions.
+process.on('uncaughtException', (err) => {
+    console.log('Shutting server down due to uncaught exception...');
+    console.log(`Error: ${err.message}`);
+    process.exit(1);
+});
+
 dotenv.config({ path: 'backend/config/config.env' });
 
 // Inint DB connection.
