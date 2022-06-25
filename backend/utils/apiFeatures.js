@@ -39,6 +39,15 @@ class APIFeatures {
         return this;
 
     }
+
+    // Implement pagination functionality.
+    paginate(resultsPerPage) {
+        const currentPage = Number(this.queryString.page) || 1;
+        const skip = (currentPage - 1) * resultsPerPage; // Skip the first n results.
+
+        this.query = this.query.limit(resultsPerPage).skip(skip);
+        return this;
+    }
 }
 
 module.exports = APIFeatures;

@@ -16,15 +16,23 @@ exports.addProduct = asyncErrors (async (req, res, next) => {
 // Get all products.
 exports.getProducts = asyncErrors (async (req, res, next) => {
 
+    // Declare max limit of products.
+    const resultsPerPage = 6;
+    const productCount = await Product.countDocuments();
+
     // Implement API features; search, pagination, and filtering.
     const apiFeatures = new APIFeatures(Product.find(), req.query)
                                         .search()
-                                        .filter();
+                                        .filter()
+                                        .paginate(resultsPerPage);
+    
+    // Fetch products from newly implemented API features.
     const products = await apiFeatures.query;
     
     res.status(200).json({
         success: true,
         count: products.length,
+        productCount,
         products
     });
 })
@@ -34,6 +42,8 @@ exports.getProduct = asyncErrors (async (req, res, next) => {
     const product = await Product.findById(req.params.id);
 
     if (!product) {
+
+        // Use custom error handler to handle errors.
         return next(new ErrorHandler('Product not found.', 404));
     }
 
