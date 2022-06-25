@@ -3,13 +3,13 @@ const express = require('express');
 const router = express.Router();
 
 // Import `getProducts` and `newProduct` function from `productsController.js`.
-const { getProducts, newProduct, getProduct } = require('../controllers/productsController');
+const { getProducts, addProduct, getProduct } = require('../controllers/productsController');
 
 // Create route for `/products` endpoint.
 router.route('/products').get(getProducts);
 
 // Create route to add new products.
-router.route('/products/new').post(newProduct);
+router.route('/products/new').post(addProduct);
 
 // Create route to get single product by ID.
 router.route('/products/:id').get(getProduct);
