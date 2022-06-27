@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const ErrorHandler = require('../utils/errorHandler');
 const asyncErrors = require('../middlewares/asyncErrors');
+const sendToken = require('../utils/jwToken');
 
 // Register a new user.
 exports.registerUser = asyncErrors(async (req, res, next) => {
@@ -15,14 +16,9 @@ exports.registerUser = asyncErrors(async (req, res, next) => {
         }
     });
 
-    const token = user.getSignedJwtToken();
-
     try {
         await user.save();
-        res.status(201).json({
-            success: true,
-            token
-        });
+        sendToken(user, 200, res)
     } catch (error) {
         next(new ErrorHandler(error.message, 400));
     }
@@ -51,9 +47,5 @@ exports.loginUser = asyncErrors(async (req, res, next) => {
     }
 
     // Return JWT token.
-    const token = user.getSignedJwtToken();
-    res.status(200).json({
-        success: true,
-        token
-    });
+    sendToken(user, 200, res)
 })
