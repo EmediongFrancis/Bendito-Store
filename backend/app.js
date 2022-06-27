@@ -14,6 +14,7 @@ const auth = require('./routes/auth');
 
 // Use routes.
 app.use('/api/v1', products);
+app.use('/api/v1', auth);
 
 // Use error handler middleware.
 app.use(errorMiddleware);

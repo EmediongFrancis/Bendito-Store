@@ -10,8 +10,8 @@ exports.registerUser = asyncErrors(async (req, res, next) => {
         email,
         password,
         photo: {
-            public_id: '',
-            url: ''
+            public_id: 'fkmggkgg',
+            url: 'fdlf;lff'
         }
     });
     try {
