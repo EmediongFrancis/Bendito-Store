@@ -10,6 +10,7 @@ app.use(express.json());
 
 // Import routes.
 const products = require('./routes/products');
+const auth = require('./routes/auth');
 
 // Use routes.
 app.use('/api/v1', products);
