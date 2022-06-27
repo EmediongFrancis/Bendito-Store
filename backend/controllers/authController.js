@@ -14,11 +14,14 @@ exports.registerUser = asyncErrors(async (req, res, next) => {
             url: 'fdlf;lff'
         }
     });
+
+    const token = user.getSignedJwtToken();
+
     try {
         await user.save();
         res.status(201).json({
             success: true,
-            user
+            token
         });
     } catch (error) {
         next(new ErrorHandler(error.message, 400));
