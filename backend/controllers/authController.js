@@ -127,6 +127,17 @@ exports.resetPassword = asyncErrors(async (req, res, next) => {
     sendToken(user, 200, res)
 })
 
+// Get currently logged in user.
+exports.getMe = asyncErrors(async (req, res, next) => {
+
+        const user = await User.findById(req.user.id);
+        res.status(200).json({
+            success: true,
+            user
+        });
+
+    })
+
 // Logout a user.
 exports.logoutUser = asyncErrors(async (req, res, next) => {
     res.cookie('token', null, {
