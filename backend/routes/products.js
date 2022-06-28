@@ -10,8 +10,12 @@ const { getProducts,
         deleteProduct 
     } = require('../controllers/productsController');
 
+
+// Require authentication for all routes.
+const { isAuthenticated } = require('../middlewares/auth');
+
 // Create route for `/products` endpoint.
-router.route('/products').get(getProducts);
+router.route('/products').get(isAuthenticated, getProducts);
 
 // Create route to add new products.
 router.route('/admin/products/new').post(addProduct);
