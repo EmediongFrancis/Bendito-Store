@@ -17,10 +17,18 @@ exports.registerUser = asyncErrors(async (req, res, next) => {
             url: 'fdlf;lff'
         }
     });
-
+ 
     try {
+
+        // Check if user already exists.
+        const oldUser = await User.findOne({ email });
+        if (oldUser) {
+            return next(new ErrorHandler('A user with this email already exists', 400));
+        }
+        
         await user.save();
-        sendToken(user, 200, res)
+        sendToken(user, 200, res);
+
     } catch (error) {
         next(new ErrorHandler(error.message, 400));
     }

@@ -33,10 +33,12 @@ module.exports = (err, req, res, next) => {
         }
 
         // Handle Mongoose duplicate key errors.
-        if (err.code === 11000) {
-            const message = `This ${Object.keys(err.keyValue)} already exists.`;
-            error = new ErrorHandler(message, 400);
-        }
+        // if (err.code === 11000) {
+        //     const message = `This ${Object.keys(err.keyValue)} already exists.`;
+        //     error = new ErrorHandler(message, 400);
+        // }
+
+
 
         // Handle wrong JWT token errors.
         if (err.name === 'JsonWebTokenError') {
