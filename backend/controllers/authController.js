@@ -2,6 +2,7 @@ const User = require('../models/user');
 const ErrorHandler = require('../utils/errorHandler');
 const asyncErrors = require('../middlewares/asyncErrors');
 const sendToken = require('../utils/jwToken');
+const sendEmail = require('../utils/sendEmail');
 
 // Register a new user.
 exports.registerUser = asyncErrors(async (req, res, next) => {
@@ -48,6 +49,47 @@ exports.loginUser = asyncErrors(async (req, res, next) => {
 
     // Return JWT token.
     sendToken(user, 200, res)
+})
+
+// Forgot password.
+exports.forgotPassword = asyncErrors(async (req, res, next) => {
+    const user = await User.findOne({email: req.body.email});
+
+    // Check if email exists.
+    if (!user) {
+        return next(new ErrorHandler('User with this email address not found', 404))
+    }
+
+    // Get reset token.
+    const resetToken = user.getResetPasswordToken();
+
+    await user.save({validateBeforeSave: false});
+
+    // Create Reset Password URL.
+    const resetURL = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`;
+    const message = `Your password reset token is:\n\n${resetURL}\n\nIf you did not request for a password reset, kindly ignore this email.`
+
+    try {
+        
+        await sendEmail({
+            email: user.email,
+            subject: 'Bendito Store Password Recovery',
+            message: message
+        })
+
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email}`
+        })
+
+    } catch (error) {
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save({validateBeforeSave: false});
+
+        return next(new ErrorHandler(error.message, 500));
+    }
 })
 
 // Logout a user.
