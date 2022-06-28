@@ -1,4 +1,3 @@
-// Import router object of express.
 const express = require('express');
 const router = express.Router();
 
@@ -11,21 +10,21 @@ const { getProducts,
     } = require('../controllers/productsController');
 
 
-// Require authentication for all routes.
+// Require authentication and authorization for admin roles.
 const { isAuthenticated, authorizeRoles } = require('../middlewares/auth');
 
-// Create route for `/products` endpoint.
+// Create route to get all products.
 router.route('/products').get(getProducts);
 
 // Create route to get single product by ID.
 router.route('/products/:id').get(getProduct);
 
-// Create route to add new products.
+// Create admin route to add new products.
 router.route('/admin/products/new').post(isAuthenticated, authorizeRoles('admin'), addProduct);
 
-// Update & delete product by ID.
+// Create admin route to update & delete product by ID.
 router.route('/admin/products/:id').put(isAuthenticated, authorizeRoles('admin'), updateProduct)
                                    .delete(isAuthenticated, authorizeRoles('admin'), deleteProduct);
 
-// Export router object of express.
+// Export router.
 module.exports = router;

@@ -1,6 +1,8 @@
 // Import mongoose (for DB schema).
 const mongoose = require('mongoose');
 
+
+
 // Write product schema using Schema object.
 const productSchema = new mongoose.Schema({
     name: {
@@ -86,6 +88,11 @@ const productSchema = new mongoose.Schema({
             }
         }
     ],
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
