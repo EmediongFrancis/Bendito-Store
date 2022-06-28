@@ -12,7 +12,7 @@ const { getProducts,
 
 
 // Require authentication for all routes.
-const { isAuthenticated } = require('../middlewares/auth');
+const { isAuthenticated, authorizeRoles } = require('../middlewares/auth');
 
 // Create route for `/products` endpoint.
 router.route('/products').get(getProducts);
@@ -21,11 +21,11 @@ router.route('/products').get(getProducts);
 router.route('/products/:id').get(getProduct);
 
 // Create route to add new products.
-router.route('/admin/products/new').post(isAuthenticated, addProduct);
+router.route('/admin/products/new').post(isAuthenticated, authorizeRoles('admin'), addProduct);
 
 // Update & delete product by ID.
-router.route('/admin/products/:id').put(isAuthenticated, updateProduct)
-                                   .delete(isAuthenticated, deleteProduct);
+router.route('/admin/products/:id').put(isAuthenticated, authorizeRoles('admin'), updateProduct)
+                                   .delete(isAuthenticated, authorizeRoles('admin'), deleteProduct);
 
 // Export router object of express.
 module.exports = router;
