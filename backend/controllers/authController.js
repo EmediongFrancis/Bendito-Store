@@ -138,6 +138,28 @@ exports.getMe = asyncErrors(async (req, res, next) => {
 
     })
 
+// Update or change password of currently logged in user.
+exports.updatePassword = asyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.user.id).select('+password');
+
+    // Check if old password is correct.
+    const isPasswordValid = await user.validatePassword(req.body.oldPassword);
+    if (!isPasswordValid) {
+        return next(new ErrorHandler('Incorrect old password', 400));
+    }
+
+    // Check if new password is same as old password.
+    if (req.body.newPassword === req.body.oldPassword) {
+        return next(new ErrorHandler('New password is same as old password', 400));
+    }
+
+    // Set new password.
+    user.password = req.body.newPassword;
+    await user.save();
+
+    sendToken(user, 200, res)
+})
+
 // Logout a user.
 exports.logoutUser = asyncErrors(async (req, res, next) => {
     res.cookie('token', null, {
