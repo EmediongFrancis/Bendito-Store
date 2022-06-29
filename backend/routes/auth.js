@@ -9,7 +9,8 @@ const {
     forgotPassword,
     resetPassword,
     getMe,
-    updatePassword } = require('../controllers/authController');
+    updatePassword,
+    updateProfile } = require('../controllers/authController');
 
 const { isAuthenticated } = require('../middlewares/auth');
 
@@ -21,6 +22,7 @@ router.route('/password/forgot').post(forgotPassword);
 router.route('/password/reset/:token').put(resetPassword);
 router.route('/me').get(isAuthenticated, getMe);
 router.route('/password/update').put(isAuthenticated, updatePassword);
+router.route('/me/update').put(isAuthenticated, updateProfile);
 
 // Export auth routes.
 module.exports = router;
