@@ -193,6 +193,10 @@ exports.logoutUser = asyncErrors(async (req, res, next) => {
     });
 })
 
+// ______________________________________________________
+// ------------------- ADMIN ROUTES ---------------------
+// ______________________________________________________
+
 // Get all users.
 exports.getAllUsers = asyncErrors(async (req, res, next) => {
     const users = await User.find();
@@ -209,6 +213,43 @@ exports.getUserById = asyncErrors(async (req, res, next) => {
     if (!user) {
         return next(new ErrorHandler(`User not found with id: ${req.params.id}`, 404));
     }
+    res.status(200).json({
+        success: true,
+        user
+    });
+})
+
+// Update user to admin.
+exports.updateAdminProfile = asyncErrors(async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+        role: req.body.role
+        }
+    
+    // Fetch user and update data.
+    const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+
+    res.status(200).json({
+        success: true,
+        user
+    })
+})
+
+// Delete user.
+exports.deleteUser = asyncErrors(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    
+    if (!user) {
+        return next(new ErrorHandler(`User not found with id: ${req.params.id}`, 404));
+    }
+
+    await user.remove();
+    
     res.status(200).json({
         success: true,
         user
