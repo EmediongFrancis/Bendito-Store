@@ -4,9 +4,6 @@ const mongoose = require('mongoose');
 const orderSchema = new mongoose.Schema({
     shippingInfo: {
 
-        type: String,
-        required: true,
-
         address: {
             type: String,
             required: true
@@ -54,8 +51,8 @@ const orderSchema = new mongoose.Schema({
         },
         productRef: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
-            required: true
+            ref: 'Product'
+            //required: true
         }
     }],
 
