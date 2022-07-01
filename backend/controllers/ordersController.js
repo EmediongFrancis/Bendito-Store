@@ -17,7 +17,6 @@ exports.newOrder = asyncErrors(async (req, res, next) => {
         } = req.body;
 
     // Create order with fetched data.
-    //const productRef = req.order.id;
     const order = new Orders({
         orderItems,
         shippingInfo,
@@ -27,12 +26,13 @@ exports.newOrder = asyncErrors(async (req, res, next) => {
         totalPrice,
         paymentInfo,
         paidAt: Date.now(),
-        user: req.user._id
+        user: req.user._id,
+        productRef: req.product._id
     });
 
     try {
         console.log(order);
-        await order.save();
+        await order.save({ validateBeforeSave: false });
         res.status(201).json({
             success: true,
             message: 'Order created successfully',
@@ -42,3 +42,77 @@ exports.newOrder = asyncErrors(async (req, res, next) => {
         next(new ErrorHandler(error.message, 400));
     }
 })
+
+// Get orders of logged in user.
+exports.myOrders = asyncErrors(async (req, res, next) => {
+    const orders = await Orders.find({ user: req.user._id });
+    if (!orders) {
+        next(new ErrorHandler('You have no orders', 404));
+    }
+    res.status(200).json({
+        success: true,
+        orders
+    });
+})
+
+// Get order by id.
+exports.getOrder = asyncErrors(async (req, res, next) => {
+    const order = await Orders.findById(req.params.id);
+    if (!order) {
+        next(new ErrorHandler('Order not found', 404));
+    }
+    res.status(200).json({
+        success: true,
+        order
+    });
+})
+
+// Get all orders.
+exports.getAllOrders = asyncErrors(async (req, res, next) => {
+    const orders = await Orders.find();
+
+    let ordersCount = 0;
+    orders.forEach(order => {
+        ordersCount += order.totalPrice;
+
+    })
+
+    if (!orders) {
+        next(new ErrorHandler('There are no orders', 404));
+    }
+    res.status(200).json({
+        success: true,
+        ordersCount,
+        orders
+    });
+})
+
+// Update order as admin.
+exports.updateOrder = asyncErrors(async (req, res, next) => {
+    const order = await Orders.findById(req.params.id);
+    
+    if (order.orderStatus === 'Delivered') {
+        next(new ErrorHandler('Order is already delivered', 400));
+    }
+
+    order.orderItems.forEach(async item => {
+        await updateStock(item.product, item.quantity);
+    })
+
+    order.orderStatus = req.body.status,
+    order.deliveredAt = Date.now();
+
+    await order.save();
+
+    res.status(200).json({
+        success: true,
+        message: 'Order updated successfully'
+    })
+})
+
+// Update stock of product.
+async function updateStock(id, quantity) {
+    const product = await Product.findById(id);
+    product.stock -= quantity;
+    await product.save();
+}
