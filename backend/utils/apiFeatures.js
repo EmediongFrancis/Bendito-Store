@@ -49,4 +49,5 @@ class APIFeatures {
     }
 }
 
+// Export APIFeatures class.
 module.exports = APIFeatures;

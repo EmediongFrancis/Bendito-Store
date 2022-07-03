@@ -55,7 +55,5 @@ router.route('/admin/users/:id').get(isAuthenticated, authorizeRoles('admin'), g
                                 .delete(isAuthenticated, authorizeRoles('admin'), deleteUser);
 
 
-
-
 // Export auth routes.
 module.exports = router;
