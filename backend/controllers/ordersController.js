@@ -3,8 +3,10 @@ const Product = require('../models/product');
 const ErrorHandler = require('../utils/errorHandler');
 const asyncErrors = require('../middlewares/asyncErrors');
 
-// Fetch order data.
+// Create order.
 exports.newOrder = asyncErrors(async (req, res, next) => {
+
+    // Fetch order data.
     const {
             orderItems,
             shippingInfo,
@@ -116,3 +118,16 @@ async function updateStock(id, quantity) {
     product.stock -= quantity;
     await product.save();
 }
+
+// Delete order.
+exports.deleteOrder = asyncErrors(async (req, res, next) => {
+    const order = await Orders.findById(req.params.id);
+    if (!order) {
+        next(new ErrorHandler('Order not found', 404));
+    }
+    await order.remove();
+    res.status(200).json({
+        success: true,
+        message: 'Order deleted successfully'
+    });
+})
