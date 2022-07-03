@@ -52,6 +52,7 @@ module.exports = (err, req, res, next) => {
             error = new ErrorHandler(message, 400);
         }
 
+        // Handle generic errors.
         res.status(error.statusCode).json({
             success: false,
             message: error.message || 'Something went wrong with the server.'

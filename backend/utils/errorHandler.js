@@ -8,4 +8,5 @@ class ErrorHandler extends Error {
     }
 }
 
+// Export error handler.
 module.exports = ErrorHandler;

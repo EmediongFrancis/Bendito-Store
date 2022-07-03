@@ -1,5 +1,3 @@
-
-
 // Create and save token in cookie.
 const sendToken = (user, statusCode, res) => {
 
@@ -9,7 +7,7 @@ const sendToken = (user, statusCode, res) => {
     // Cokkie options.
     const options = {
         expires: new Date(
-            Date.now() + process.env.COOKIE_EXPIRATION * 24 * 60 * 60 * 1000
+            Date.now() + process.env.COOKIE_EXPIRATION * 24 * 60 * 60 * 1000 // Set expiration to 1 day.
         ),
         httpOnly: true
     }
@@ -21,4 +19,5 @@ const sendToken = (user, statusCode, res) => {
     })
 }
 
+// Export sendToken.
 module.exports = sendToken;

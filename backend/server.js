@@ -12,6 +12,7 @@ process.on('uncaughtException', (err) => {
     process.exit(1);
 });
 
+// Specify path to vars.
 dotenv.config({ path: 'backend/config/config.env' });
 
 // Inint DB connection.

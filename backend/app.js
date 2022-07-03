@@ -10,7 +10,7 @@ const errorMiddleware = require('../backend/middlewares/errors');
 app.use(express.json());
 app.use(cookieParser());
 
-// Import routes.
+// Import routes (authentication, products, and orders).
 const products = require('./routes/products');
 const auth = require('./routes/auth');
 const order = require('./routes/order');
