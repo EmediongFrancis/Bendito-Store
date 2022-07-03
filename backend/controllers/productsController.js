@@ -135,3 +135,17 @@ exports.addReview = asyncErrors (async (req, res, next) => {
 
     })
 })
+
+// Get all reviews for a product.
+exports.getReviews = asyncErrors (async (req, res, next) => {
+    const product = await Product.findById(req.query.id);
+
+    if (!product) {
+        return next(new ErrorHandler('Product not found.', 404));
+    }
+
+    res.status(200).json({
+        success: true,
+        reviews: product.reviews
+    })
+})
