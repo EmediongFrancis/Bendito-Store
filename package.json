@@ -34,6 +34,7 @@
     "nodemailer": "^6.7.5",
     "package-json": "^8.1.0",
     "update-notifier": "^6.0.2",
+    "urix": "^0.1.0",
     "validator": "^13.7.0"
   },
   "devDependencies": {
