@@ -21,7 +21,7 @@ exports.addProduct = asyncErrors(async (req, res, next) => {
 exports.getProducts = asyncErrors(async (req, res, next) => {
 
     // Declare max limit of products.
-    const resultsPerPage = 6;
+    const resultsPerPage = 10;
     const productsCount = await Product.countDocuments();
 
     // Implement API features; search, pagination, and filtering.
