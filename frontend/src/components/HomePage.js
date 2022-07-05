@@ -1,7 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import MetaData from './layout/MetaData'
 
+import { useDispatch, useSelector } from 'react-redux'
+import { getProducts } from '../actions/productActions'
+
 const HomePage = () => {
+
+  const dispatch = useDispatch();
+
+  const { products, loading, error, productsCount } = useSelector(state => state.product);
+
+  useEffect(() => {
+
+    dispatch(getProducts());
+  }, [dispatch])
+
   return (
     <Fragment>
       <MetaData title={'Buy Quality Products'} />
@@ -9,7 +22,8 @@ const HomePage = () => {
 
       <section id="products" className="container mt-5">
         <div className="row">
-          <div className="col-sm-12 col-md-6 col-lg-3 my-3">
+          {products && products.map(product => (
+            <div className="col-sm-12 col-md-6 col-lg-3 my-3">
             <div className="card p-3 rounded">
               <img
                 alt='product'
@@ -31,6 +45,8 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+          ))}
+          
 
         </div>
       </section>

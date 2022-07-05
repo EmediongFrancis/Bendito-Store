@@ -10,14 +10,6 @@
         }],
         "category": "Electronic gadgets",
         "vendor": "Ebay",
-        "stock": "10",
-        "totalReviews": "10",
-        "reviews": [{
-            "name": "John",
-            "rating": "5",
-            "comment": "This is a good product"
-        }]
-
-
+        "stock": "10"
     }
 ]
