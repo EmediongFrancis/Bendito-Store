@@ -8,7 +8,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProductsDetails, clearErrors } from '../../actions/productActions'
 
-const ProductDetails = ({ }) => {
+const ProductDetails = () => {
 
     const dispatch = useDispatch();
     const alert = useAlert();
@@ -32,6 +32,7 @@ const ProductDetails = ({ }) => {
 
             {loading ? <Loader /> : (
                 <Fragment>
+                    <MetaData title={product.name} />
                     <div className="row f-flex justify-content-around">
 
                         <div className="col-12 col-lg-5 img-fluid" id="product_image">
