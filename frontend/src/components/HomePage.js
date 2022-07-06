@@ -4,12 +4,12 @@ import Product from './products/Product'
 import Loader from './layout/Loader'
 import Pagination from 'react-js-pagination';
 
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../actions/productActions'
 import { useAlert } from 'react-alert'
 
-const HomePage = ({ match }) => {
+const HomePage = () => {
 
   const { currentPage, setCurrentPage } = useState(1)
 
@@ -17,9 +17,9 @@ const HomePage = ({ match }) => {
 
   const dispatch = useDispatch();
 
-  const { products, loading, error, productsCount, resultsPerPage } = useSelector(state => state.products);
+  const { products, loading, error, productsCount, resultsPerPage } = useSelector(state => state.product);
 
-  const keyword = match.params.keyword;
+  const keyword = useParams.keyword;
 
   useEffect(() => {
 
