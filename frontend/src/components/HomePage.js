@@ -4,12 +4,12 @@ import Product from './products/Product'
 import Loader from './layout/Loader'
 import Pagination from 'react-js-pagination';
 
-
+// import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../actions/productActions'
 import { useAlert } from 'react-alert'
 
-const HomePage = () => {
+const HomePage = ({ match }) => {
 
   const { currentPage, setCurrentPage } = useState(1)
 
@@ -17,7 +17,9 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
 
-  const { products, loading, error, productsCount, resultsPerPage } = useSelector(state => state.product);
+  const { products, loading, error, productsCount, resultsPerPage } = useSelector(state => state.products);
+
+  const keyword = match.params.keyword;
 
   useEffect(() => {
 
@@ -25,9 +27,9 @@ const HomePage = () => {
       return alert.error(error);
     }
 
-    dispatch(getProducts(currentPage));
+    dispatch(getProducts(keyword, currentPage));
 
-  }, [dispatch, error, alert, currentPage]);
+  }, [dispatch, error, alert, currentPage, keyword]);
 
   function setCurrentPageNo(page) {
     setCurrentPage(page);
