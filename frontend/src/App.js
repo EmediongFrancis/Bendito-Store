@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import HomePage from './components/HomePage';
+import ProductDetails from './components/products/ProductDetails';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <div className="container container-fluid">
           <Routes>
             <Route path="/" element={<HomePage />} exact />
+            <Route path="/product/:id" element={<ProductDetails />} exact />
           </Routes>
         </div>
         <Footer />
