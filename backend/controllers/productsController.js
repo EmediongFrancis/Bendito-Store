@@ -33,13 +33,11 @@ exports.getProducts = asyncErrors(async (req, res, next) => {
     // Fetch products from newly implemented API features.
     const products = await apiFeatures.query;
 
-    setTimeout(() => {
-        res.status(200).json({
-            success: true,
-            products,
-            productsCount
-        });
-    }, 2000);
+    res.status(200).json({
+        success: true,
+        products,
+        productsCount
+    });
 
 })
 

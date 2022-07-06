@@ -5,8 +5,11 @@ import Loader from './layout/Loader'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getProducts } from '../actions/productActions'
+import { useAlert } from 'react-alert'
 
 const HomePage = () => {
+
+  const alert = useAlert()
 
   const dispatch = useDispatch();
 
@@ -14,8 +17,13 @@ const HomePage = () => {
 
   useEffect(() => {
 
+    if (error) {
+      return alert.error(error);
+    }
+
     dispatch(getProducts());
-  }, [dispatch])
+
+  }, [dispatch, error, alert]);
 
   return (
     <Fragment>
