@@ -10,7 +10,7 @@ const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <img height={50} width={60} alt="BS Logo" src="/images/bs_logo.png" />
+            <img height={50} width={60} alt="BS Logo" src="/images/bs_logo.jpeg" />
           </div>
         </div>
 
